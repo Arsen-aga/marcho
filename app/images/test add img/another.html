@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .container {
+    margin: 150px auto 0;
+    padding: 30px;
+    background-color: #ccc;
+    border-radius: 25px;
+    max-width: 250px;
+  }
+
+  .wrapper {
+    position: relative;
+  }
+
+  .add-photo__wrapper {
+    border: 1px solid red;
+    display: inline-block;
+    border-radius: 20px;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .add-photo__img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .add-photo {
+    display: none;
+  }
+
+  .close {
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: #fff;
+    display: none;
+  }
+
+  .close.active {
+    display: block;
+  }
+
+  .close .bar {
+    position: absolute;
+    top: 47%;
+    right: 15%;
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: #8f90f8;
+  }
+
+  .close .bar:first-child {
+    transform: rotate(45deg);
+  }
+
+  .close .bar:last-child {
+    transform: rotate(-45deg);
+  }
+</style>
+
+<body>
+  <form method="post" enctype="multipart/form-data">
+    <div class="container">
+      <div class="wrapper">
+        <label for="add-photo">
+          <input class="add-photo" type="file" name="image" id="add-photo">
+          <div class="add-photo__wrapper">
+            <img class="add-photo__img" src="photo.svg" alt="">
+          </div>
+        </label>
+        <div class="close">
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+      <!-- <button class="test2">add2</button> -->
+    </div>
+  </form>
+
+
+  <script>
+    const fileTypes = ["image/jpeg", "image/pjpeg", "image/png"];
+
+    function validFileType(file) {
+      for (var i = 0; i < fileTypes.length; i++) {
+        if (file.type === fileTypes[i]) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+
+    const input = document.querySelector(".add-photo");
+    const preview = document.querySelector(".add-photo__wrapper");
+    const img = preview.getElementsByTagName('*')[0];
+    const closeBtn = document.querySelector('.close');
+    const defSrc = 'photo.svg';
+
+    const changeImage = () => {
+      let photo = input.files[0];
+      console.log(input.files[0]);
+
+      if (photo && validFileType(photo)) {
+        const photoSrc = window.URL.createObjectURL(photo);
+        img.src = photoSrc;
+        closeBtn.classList.add('active');
+        input.value = '';
+      } else if (img.src === defSrc) {
+        closeBtn.classList.remove('active');
+      }
+    }
+
+    input.addEventListener('change', changeImage);
+
+    closeBtn.addEventListener("click", () => {
+      img.src = defSrc;
+      closeBtn.classList.remove('active');
+    });
+
+
+  </script>
+</body>
+
+</html>
