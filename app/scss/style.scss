@@ -129,6 +129,10 @@
     line-height: 1;
   }
 
+  &__form{
+    display: flex;
+  }
+
   &__text {
     margin-bottom: 25px;
   }
@@ -139,6 +143,7 @@
     width: 100%;
     outline: none;
     border: none;
+    margin-right: 3px;
     padding: 12px 10px 12px 15px;
     box-shadow: 0px 7px 20px 0px rgba(192, 192, 192, 0.3);
 
